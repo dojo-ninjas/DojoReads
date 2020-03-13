@@ -16,6 +16,7 @@ class UserManager(models.Manager):
         errors={}
         if len(User.objects.filter(email=postData['email']))== 0:
             errors['email'] = "Email does not exist"
+        
         user= User.objects.filter(email=postData['email'])
         if user[0].password != postData['password']:
             errors['password']= 'Incorrect Email/Password combination'
@@ -28,3 +29,5 @@ class User(models.Model):
     objects=UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    def __repr__(self):
+        return f"<Movie object: {self.name}, {self.alias}, {self.email}>"

@@ -23,9 +23,9 @@ def login(request):
             messages.error(request, value)
             return redirect('/')
     else:
-        user=User.objects.filter(email=request.POST['email'])
-        print(user[0])
-        request.session['alias']=user[0].alias
+        emailFilter=User.objects.filter(email=request.POST['email'])
+        user= emailFilter[0]
+        request.session['alias']=user.alias
         return redirect('/success')
 
 def success(request):
