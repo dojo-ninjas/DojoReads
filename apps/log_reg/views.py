@@ -29,7 +29,7 @@ def login(request):
         return redirect('/success')
 
 def success(request):
-    return render(request, 'log_reg/success.html')
+    return redirect('/books')
 
 def logout(request):
     request.session.flush()
