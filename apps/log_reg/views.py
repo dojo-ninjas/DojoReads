@@ -10,7 +10,8 @@ def register(request):
     if errors:
         for key,value in errors.items():
             messages.error(request, value,'register')
-            return redirect('/')
+        request.session['errorType']='register'
+        return redirect('/')
     else:
         User.objects.create(name=request.POST['name'], alias=request.POST['alias'], email=request.POST['email'], password=request.POST['password'])
         request.session['alias']=request.POST['alias']
@@ -21,7 +22,8 @@ def login(request):
     if errors:
         for key,value in errors.items():
             messages.error(request, value,'login')
-            return redirect('/')
+        request.session['errorType']='login'
+        return redirect('/')
     else:
         emailFilter=User.objects.filter(email=request.POST['email'])
         user= emailFilter[0]
