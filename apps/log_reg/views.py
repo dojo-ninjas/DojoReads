@@ -9,7 +9,7 @@ def register(request):
     errors=User.objects.registerValidator(request.POST)
     if errors:
         for key,value in errors.items():
-            messages.error(request, value)
+            messages.error(request, value,'register')
             return redirect('/')
     else:
         User.objects.create(name=request.POST['name'], alias=request.POST['alias'], email=request.POST['email'], password=request.POST['password'])
@@ -20,7 +20,7 @@ def login(request):
     errors=User.objects.loginValidator(request.POST)
     if errors:
         for key,value in errors.items():
-            messages.error(request, value)
+            messages.error(request, value,'login')
             return redirect('/')
     else:
         emailFilter=User.objects.filter(email=request.POST['email'])
@@ -32,5 +32,5 @@ def success(request):
     return redirect('/books')
 
 def logout(request):
-    request.session.flush()
+    request.session.clear()
     return redirect("/")
