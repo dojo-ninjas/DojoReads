@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Add a Book and Review</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body class="container">
+    <div class="row">
+        <p class="ml-auto"><a href="/books">Home</a> <a class="ml-3" href="/logout">Logout</a></p>
+    </div>
+    <div>
+        <h2>Add a new Book Title and a Review:</h2>
+        <form action="/books/add/" method="POST">
+            {%csrf_token%}
+            <div class="form-group">
+              <label>Book Title:</label>
+              <input type="text" class="form-control" name="title">
+            </div>
+            <div class="form-group" name="dropDown">
+                <label>Choose from the list:</label>
+              <select class="custom-select" name="existingAuthor" placeholder="Select Author">
+                <option selected>Select the Author</option>
+                {% for book in allAuthors %}
+                    <option value="{{book.author}}">{{book.author}}</option>
+                {% endfor %}
+                <option>New Author</option>
+              </select>
+            </div>
+            <div class="form-group" name="addNew">
+                <label>Or add a new author:</label>
+                <input type="text" class="form-control" name="newAuthor">
+            </div>
+            <div class="form-group">
+              <label>Review:</label>
+              <textarea class="form-control" name="review" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Rating</label>
+              <select class="form-control" name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary ml-auto">Add Book and Review</button>
+        </form>
+    </div>
+    <script>
+        
+    </script>
+  </body>
+</html>
