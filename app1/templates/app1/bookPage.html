@@ -13,21 +13,41 @@
         <p class="ml-auto"><a href="/books/">Home</a> <a class="ml-3" href="/logout/">Logout</a></p>
     </div>
     <div class="row">
-        <div class="col">
-            <p>{{book.title}}</p>
+        <div class="col-6">
+            <h2>{{book.title}}</h2>
             <p>{{book.author}}</p>
 
-            <h2>Reviews:</h2>
-            <hr>
+            <h2 class="border-bottom border-dark">Reviews:</h2>
             {% for review in reviews %}
+            <div class="border-bottom border-dark"> 
                 <p>Rating: {{review.rating}}</p>
                 <p><a href="/users/{{review.user.id}}/">{{review.user.name}}</a> says: <span class="font-italic">{{review.review}}</span></p>
                 <p class="font-italic">Posted on: {{review.created_at}}</p>
-                {% if review.user.id == request.session.id %}
-                    <a href="/books/{{review.id}}/deleteReview">Delete this Review</a>
+                {% if review.user.alias == request.session.alias %}
+                    <a href="/books/{{review.id}}/delete">Delete this Review</a>
                 {% endif %}
-                <hr>
+            </div>   
             {% endfor %}
+        </div>
+        <div class="col">
+            <form action="/books/{{book.id}}/addReview/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Add a Review:</label>
+                    <textarea class="form-control" name="review" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                   <label>Rating</label>
+                    <select class="form-control" name="rating">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary ml-auto">Submit Review</button>
+            </form>
         </div>
     </div>
   </body>

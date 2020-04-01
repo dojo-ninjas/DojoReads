@@ -33,4 +33,22 @@ def addBook(request):
         Review.objects.create(review=request.POST['review'], rating=request.POST['rating'], user=loggedInUser[0], book=newBook[0])
         newReview=Review.objects.filter(review=request.POST['review'])
         return redirect(f'/books')
-        # return redirect(f'/books/{newReview.id}')
+def bookPage(request, id):
+    book=Book.objects.filter(id=id)
+    context={
+        'book':book[0],
+        'reviews':Review.objects.filter(book__in=book),
+    }
+    return render(request,'app1/bookPage.html', context)
+def delete(request, id):
+    review=Review.objects.get(id=id)
+    bookId=review.book.id
+    review.delete()
+    return redirect(f'/books/{bookId}')
+
+def addReview(request, id):
+    user=User.objects.get(alias=request.session['alias'])
+    book=Book.objects.get(id=id)
+
+    Review.objects.create(review=request.POST['review'], rating=request.POST['rating'], user=user, book=book)
+    return redirect(f'/books/{id}')
